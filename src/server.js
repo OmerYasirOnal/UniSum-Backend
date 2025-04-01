@@ -1,34 +1,51 @@
 require("dotenv").config(); // .env dosyasındaki değişkenlerin yüklenmesi
 
+// Güvenlik ve kripto modülleri
 const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
 bcrypt.setRandomFallback(() => crypto.randomBytes(16));
 
+// Temel modüller
 const express = require("express");
 const cors = require("cors");
-const { connectDB } = require("./config/db");
 const path = require("path");
 
+// Kendi modüllerimiz
+const { connectDB } = require("./config/db");
+const logger = require('./utils/logger');
+const { generalLimiter } = require('./middlewares/rateLimiter');
+const securityMiddleware = require('./middlewares/securityMiddleware');
+const { notFoundHandler, errorHandler } = require('./middlewares/errorHandler');
+
+// Express uygulaması
 const app = express();
 
-// Statik dosyaları servis et: public klasörü
-app.use(express.static(path.join(__dirname, "public")));
-
-// Trust proxy if using one
+// Güvenlik ayarları
 app.set('trust proxy', true);
+app.use(securityMiddleware.helmet);
+app.use(securityMiddleware.contentSecurityPolicy);
 
-// Security and parsing middleware
+// CORS konfigürasyonu
 app.use(cors({
-    origin: '*', // herkese açık
+    origin: '*', // Üretim ortamında daha kısıtlayıcı olmalı
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true
 }));
 
+// Body parser ve XSS koruması
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(securityMiddleware.xssProtection);
+app.use(securityMiddleware.corsErrorHandler);
 
-// Import routes
+// Genel hız sınırlama
+app.use(generalLimiter);
+
+// Statik dosyaları servis et
+app.use(express.static(path.join(__dirname, "public")));
+
+// Routes
 const routes = {
     auth: require("./routes/authRoutes"),
     term: require("./routes/termRoutes"),
@@ -51,40 +68,41 @@ app.get("/reset-password", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "resetPassword.html"));
 });
 
-// 404 error handling middleware
-app.use((req, res) => {
-    res.status(404).json({
-        status: 'error',
-        message: "Route not found",
-        path: req.originalUrl,
-        method: req.method,
-        timestamp: new Date().toISOString()
-    });
-});
+// 404 ve error handling middleware'ler
+app.use(notFoundHandler);
+app.use(errorHandler);
 
-// General error handling middleware
-app.use((err, req, res, next) => {
-    const statusCode = err.statusCode || 500;
-    res.status(statusCode).json({
-        status: 'error',
-        message: statusCode === 500 ? "Internal Server Error" : err.message,
-        timestamp: new Date().toISOString()
-    });
-});
-
-// Server initialization
+// Server başlatma
 const PORT = process.env.PORT || 3000;
 const startServer = async () => {
     try {
+        // Veritabanı bağlantısı
         await connectDB();
+        
+        // Sunucuyu başlat
         app.listen(PORT, () => {
-            console.log(`Server running on port ${PORT}`);
+            logger.info(`Server running on port ${PORT}`);
         });
     } catch (error) {
-        console.error('Server failed to start:', error.message);
+        logger.error(`Server failed to start: ${error.message}`);
         process.exit(1);
     }
 };
+
+// Sunucuyu çalıştır
 startServer();
+
+// Beklenmedik hataları yakala
+process.on('uncaughtException', (error) => {
+    logger.error(`Uncaught Exception: ${error.message}`);
+    logger.error(error.stack);
+    process.exit(1);
+});
+
+process.on('unhandledRejection', (error) => {
+    logger.error(`Unhandled Rejection: ${error.message}`);
+    logger.error(error.stack);
+    process.exit(1);
+});
 
 module.exports = app;

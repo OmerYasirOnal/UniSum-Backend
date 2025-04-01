@@ -1,6 +1,12 @@
 const express = require("express");
 const router = express.Router();
+
+// Middleware'ler
 const authMiddleware = require("../middlewares/authMiddleware");
+const { validateSignup, validateLogin, validatePasswordReset } = require("../middlewares/validator");
+const { authLimiter } = require("../middlewares/rateLimiter");
+
+// Controller fonksiyonları
 const { 
     signup, 
     login, 
@@ -8,15 +14,56 @@ const {
     requestPasswordReset, 
     resetPassword, 
     deleteAccount,
-    refreshToken  // Yeni eklenen fonksiyon
+    refreshToken
 } = require("../controllers/authController");
 
-router.post("/signup", signup);
-router.post("/login", login);
+/**
+ * @route   POST /auth/signup
+ * @desc    Yeni kullanıcı kaydı
+ * @access  Public
+ */
+router.post("/signup", authLimiter, validateSignup, signup);
+
+/**
+ * @route   POST /auth/login
+ * @desc    Kullanıcı girişi
+ * @access  Public
+ */
+router.post("/login", authLimiter, validateLogin, login);
+
+/**
+ * @route   GET /auth/verify-email
+ * @desc    E-posta doğrulama
+ * @access  Public
+ */
 router.get("/verify-email", verifyEmail);
-router.post("/password-reset", requestPasswordReset); // Şifre sıfırlama talebi
-router.post("/reset-password", resetPassword);          // Yeni şifre belirleme
-router.post("/refresh-token", refreshToken);              // Refresh token için endpoint
-router.delete("/delete-account", authMiddleware, deleteAccount);  // Kullanıcı silme işlemi
+
+/**
+ * @route   POST /auth/password-reset
+ * @desc    Şifre sıfırlama talebi
+ * @access  Public
+ */
+router.post("/password-reset", authLimiter, requestPasswordReset);
+
+/**
+ * @route   POST /auth/reset-password
+ * @desc    Yeni şifre belirleme
+ * @access  Public
+ */
+router.post("/reset-password", authLimiter, validatePasswordReset, resetPassword);
+
+/**
+ * @route   POST /auth/refresh-token
+ * @desc    Erişim token'ını yenileme
+ * @access  Public
+ */
+router.post("/refresh-token", refreshToken);
+
+/**
+ * @route   DELETE /auth/delete-account
+ * @desc    Kullanıcı hesabını silme
+ * @access  Private
+ */
+router.delete("/delete-account", authMiddleware, deleteAccount);
 
 module.exports = router;
