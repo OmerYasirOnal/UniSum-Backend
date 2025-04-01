@@ -1,0 +1,43 @@
+# Node.js projesi için .gitignore
+
+# Ortam değişkenleri
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Bağımlılıklar
+/node_modules
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# Sistem dosyaları
+.DS_Store
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Log dosyaları
+logs
+*.log
+
+# Geçici dosyalar
+/tmp
+/temp
+
+# Üretim yapılandırma dosyaları
+/config/production.json
+
+# Sertifikalar
+*.pem
+*.key
+*.crt
+
+# Diğer
+coverage/
+.nyc_output
+dist
+build 
