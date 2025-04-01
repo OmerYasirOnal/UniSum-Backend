@@ -2,6 +2,12 @@
 
 Projedeki tüm önemli değişiklikler bu dosyada belgelenecektir.
 
+## [1.0.2] - 2024-04-01
+
+### Değişiklikler
+- Proje yapısı yeniden düzenlendi: Tüm kodlar "src" klasörü altına taşındı
+- package.json dosyasındaki yollar güncellendi
+
 ## [1.0.1] - 2024-04-01
 
 ### Değişiklikler
