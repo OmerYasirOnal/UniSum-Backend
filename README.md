@@ -1,12 +1,12 @@
 # UniSum Backend
 =====================================
 
-Üniversite not takibi için geliştirilen bir API. Bu proje, öğrencilerin notlarını takip etmelerine ve dönemsel not ortalamalarını hesaplamalarına yardımcı olur.
+Üniversite not takibi için geliştirilen bir API. Bu proje, öğrencilerin notlarını takip etmelerine ve çeşitli istatistikleri görmelerine yardımcı olur.
 
 ## Overview
 ------------
 
-UniSum Backend, üniversite not takibi için tasarlanmış bir API'dir. Kullanıcı kaydı ve kimlik doğrulama, dönem yönetimi, ders yönetimi, not ve ağırlıklı not ortalaması (GPA) hesaplama gibi özellikleri destekler. Ayrıca, not ölçeklendirme sistemi desteği sağlar.
+UniSum Backend, üniversite not takibi için tasarlanmış bir API'dir. Kullanıcı kaydı ve kimlik doğrulama, dönem yönetimi, ders yönetimi, not ve ağırlıklı not ortalaması (GPA) hesaplama ve not ölçeklendirme sistemi desteği gibi özellikleri içerir.
 
 ## Tech Stack
 -------------
@@ -69,6 +69,8 @@ npm start
 
 ## API Endpoints
 ----------------
+
+API aşağıdaki endpoint'leri sağlar:
 
 * `/auth`: Kimlik doğrulama işlemleri
 * `/terms`: Dönem yönetimi
