@@ -1,40 +1,32 @@
-# Değişiklik Günlüğü
+# Changelog
 
-Projedeki tüm önemli değişiklikler bu dosyada belgelenecektir.
+All notable changes to this project will be documented in this file.
 
-## [1.0.3] - 2024-04-01
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-### Değişiklikler
-- Kod yapısı refactor edildi
-- Utility ve helper sınıflar eklendi:
-  - Merkezi loglama (logger.js)
-  - API yanıt standartlaştırma (responseHelper.js)
-  - Hız sınırlama (rateLimiter.js)
-  - Gelişmiş hata yönetimi (errorHandler.js)
-  - Güvenlik iyileştirmeleri (securityMiddleware.js)
-  - Giriş doğrulama (validator.js)
-- server.js dosyası daha modüler hale getirildi
-- Auth rotaları daha iyi dokümante edildi ve güvenlik önlemleri eklendi
+## [Unreleased]
 
-## [1.0.2] - 2024-04-01
+### Added
+- Initial project setup
+- Core features implementation
 
-### Değişiklikler
-- Proje yapısı yeniden düzenlendi: Tüm kodlar "src" klasörü altına taşındı
-- package.json dosyasındaki yollar güncellendi
+### Changed
+- N/A
 
-## [1.0.1] - 2024-04-01
+### Deprecated
+- N/A
 
-### Değişiklikler
-- package.json dosyasında version numarası 1.0.0'dan 1.0.1'e güncellendi.
-- Versiyonlama sistemi için Git tag'leri kullanılmaya başlandı.
-- CHANGELOG.md dosyası eklendi.
+### Removed
+- N/A
 
-## [1.0.0] - 2024-04-01
+### Fixed
+- N/A
 
-### Eklenenler
-- İlk sürüm
-- Kullanıcı kimlik doğrulama (kayıt, giriş, e-posta doğrulama)
-- Dönem yönetimi
-- Ders yönetimi
-- Not ve GPA hesaplama
-- Not ölçeklendirme sistemi 
+### Security
+- N/A
+
+## [1.0.0] - 2025-10-27
+
+### Added
+- Initial release
