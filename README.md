@@ -1,3 +1,4 @@
+```markdown
 # UniSum Backend
 
 Üniversite not takibi için geliştirilen bir API.
@@ -13,32 +14,32 @@
 ## Kurulum
 
 1. Repoyu klonlayın:
-```bash
-git clone https://github.com/kullaniciadi/UniSum-Backend.git
-cd UniSum-Backend
-```
+    ```bash
+    git clone https://github.com/kullaniciadi/UniSum-Backend.git
+    cd UniSum-Backend
+    ```
 
 2. Bağımlılıkları yükleyin:
-```bash
-npm install
-```
+    ```bash
+    npm install
+    ```
 
 3. `.env.example` dosyasını kopyalayıp `.env` olarak kaydedin ve gerekli ayarları yapın:
-```bash
-cp .env.example .env
-# .env dosyasını düzenleyin
-```
+    ```bash
+    cp .env.example .env
+    # .env dosyasını düzenleyin
+    ```
 
 4. Veritabanını kurun:
-```bash
-# Veritabanını oluşturun (MySQL)
-# Veritabanı şemalarını oluşturmak için Sequelize kullanabilirsiniz
-```
+    ```bash
+    # Veritabanını oluşturun (MySQL)
+    # Veritabanı şemalarını oluşturmak için Sequelize kullanabilirsiniz
+    ```
 
 5. Uygulamayı başlatın:
-```bash
-npm start
-```
+    ```bash
+    npm start
+    ```
 
 ## Kullanım
 
@@ -57,4 +58,5 @@ Katkıda bulunmak için lütfen bir pull request açın.
 
 ## Lisans
 
-[MIT](LICENSE) 
+[MIT](LICENSE)
+```
